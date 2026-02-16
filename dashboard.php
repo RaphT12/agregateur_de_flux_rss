@@ -32,7 +32,7 @@
                         <p>Vos centres d'interets :</p>
                     </div>
                     <div id="Changer" class="boutonH">
-                        <p>Changer vos centres d'interets</p>
+                        <p><a href="CentreInteret.php">Changer vos centres d'interets</a></p>
                     </div>
                 </div>
             </article>
@@ -54,7 +54,7 @@
                                 <img class='imgactu' src='{$image_url}' alt=''>
                                 <div class='infos'>
                                     <h2>{$item->title}</h2>
-                                    <p>{$item->description}</p>
+                                    <p class='description'>{$item->description}</p>
                                     <div class='plusinfos'>
                                         <p class='heur'>{$item->pubDate}</p>
                                         <p><a href='{$item->link}'>Plus d'infos ></a></p>

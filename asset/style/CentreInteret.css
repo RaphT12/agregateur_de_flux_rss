@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    width: 80%;
+    margin: auto;
+    background-color: rgb(246, 246, 246);
+}
+
+header{
+    background-color: black;
+    color: white;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+#header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+
+#boutonHead{
+    display: flex;
+    gap: 10px;
+}
+
+.boutonH{
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+    color: white;
+}
+
+.boutonH a{
+    color: white;
+    text-decoration: none;
+}
+
+.deconnexion{
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+
+.checkboxs{
+    width: 300px;
+    height: 40px;
+    border: 2px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+}
+
+#formulaire{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 50px;
+    width: 85%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* On cible la checkbox */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* Ce qui se passe quand on coche */
+input[type="checkbox"]:checked {
+    background-color: black;
+}
+
+/* Ajouter une petite coche (V) blanche quand c'est coché */
+input[type="checkbox"]:checked::after {
+    content: '✔';
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.boutonsub{
+    padding: 10px 20px 10px 20px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
