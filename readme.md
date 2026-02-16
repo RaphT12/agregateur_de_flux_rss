@@ -27,4 +27,4 @@ Vous allez travailler en groupe sur la réalisation d'un **agrégateur de flux R
 * [Liste des flux RSS du Monde.fr](https://www.lemonde.fr/actualite-medias/article/2019/08/12/les-flux-rss-du-monde-fr_5498778_3236.html)
 * [Tutoriel PHP Mail](https://www.hostinger.fr/tutoriels/php-mail)
 
-CACA
+prout
