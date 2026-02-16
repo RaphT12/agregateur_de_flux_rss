@@ -60,6 +60,7 @@
                                         <p><a href='{$item->link}'>Plus d'infos ></a></p>
                                     </div>
                                 </div>
+                            </div>
                         ";
                     };
                 } else {
