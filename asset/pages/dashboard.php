@@ -1,4 +1,29 @@
+<?php
+function formatTempsEcoule($dateRss) {
+    // Convertit la date du flux en secondes
+    $dateArticle = strtotime($dateRss);
+    $maintenant = time();
+    $secondes = $maintenant - $dateArticle;
 
+    // Calcul des différentes unités
+    if ($secondes < 60) {
+        return "À l'instant";
+    }
+    
+    $minutes = round($secondes / 60);
+    if ($minutes < 60) {
+        return "Il y a " . $minutes . " min";
+    }
+    
+    $heures = round($secondes / 3600);
+    if ($heures < 24) {
+        return "Il y a " . $heures . " h";
+    }
+    
+    $jours = round($secondes / 86400);
+    return "Il y a " . $jours . " jour" . ($jours > 1 ? "s" : "");
+}
+?>
 
 
 
@@ -46,6 +71,7 @@
                     foreach ($rss->channel->item as $item) {
                         $media = $item->children('http://search.yahoo.com/mrss/');
                         $image_url = "";
+                        $temps = formatTempsEcoule((string)$item->pubDate);
                         if (isset($media->content)) {
                             $image_url = (string)$media->content->attributes()->url;
                         }
@@ -56,7 +82,7 @@
                                     <h2>{$item->title}</h2>
                                     <p class='description'>{$item->description}</p>
                                     <div class='plusinfos'>
-                                        <p class='heur'>{$item->pubDate}</p>
+                                        <p class='heur'>{$temps}</p>
                                         <p><a href='{$item->link}'>Plus d'infos ></a></p>
                                     </div>
                                 </div>

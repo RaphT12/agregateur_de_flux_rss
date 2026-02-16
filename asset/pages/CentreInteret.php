@@ -23,58 +23,28 @@
         </div>
     </header>
     <main>
-        <div id="abonnements">
-            <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // On crée un tableau pour stocker les choix faits
-                $choix_utilisateurs = [];
-
-                // On vérifie chaque checkbox une par une
-                if (isset($_POST['checkboxInternational'])) {
-                    $choix_utilisateurs[] = "International";
-                }
-                if (isset($_POST['chekboxPlanète'])) {
-                    $choix_utilisateurs[] = "Planète";
-                }
-                if (isset($_POST['chekboxPolitique'])) {
-                    $choix_utilisateurs[] = "Politique";
-                }
-                if (isset($_POST['chekboxSociété'])) {
-                    $choix_utilisateurs[] = "Société";
-                }
-                if (isset($_POST['chekboxCulture'])) {
-                    $choix_utilisateurs[] = "Culture";
-                }
-
-                // Test d'affichage
-                if (!empty($choix_utilisateurs)) {
-                    echo "<p>Vous vous êtes abonné à : " . implode(", ", $choix_utilisateurs) . "</p>";
-                } else {
-                    echo "Veuillez sélectionner au moins un centre d'intérêt.";
-                }
-            }
-            ?>
+        <div id="abonnements">  
         </div>
         <form action="./CentreInteret.php" method="POST">
             <div id="formulaire">
                 <div class="checkboxs">
-                    <input type="checkbox" id="International" name="checkboxInternational" value="checkInternational" />
+                    <input type="checkbox" id="International" name="themes[]" value="checkInternational" />
                     <label for="International">International</label>
                 </div>
                 <div class="checkboxs">
-                    <input type="checkbox" id="Planète" name="chekboxPlanète" value="chekPlanète" />
+                    <input type="checkbox" id="Planète" name="themes[]" value="chekPlanète" />
                     <label for="Planète">Planète</label>
                 </div> 
                 <div class="checkboxs">
-                    <input type="checkbox" id="Politique" name="chekboxPolitique" value="chekPolitique" />
+                    <input type="checkbox" id="Politique" name="themes[]" value="chekPolitique" />
                     <label for="Politique">Politique</label>
                 </div> 
                 <div class="checkboxs">
-                    <input type="checkbox" id="Société" name="chekboxSociété" value="chekSociété" />
+                    <input type="checkbox" id="Société" name="themes[]" value="chekSociété" />
                     <label for="Société">Société</label>
                 </div> 
                 <div class="checkboxs">
-                    <input type="checkbox" id="Culture" name="chekboxCulture" value="chekCulture" />
+                    <input type="checkbox" id="Culture" name="themes[]" value="chekCulture" />
                     <label for="sCulture">Culture</label>
                 </div>  
             </div>
