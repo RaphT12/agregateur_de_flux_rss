@@ -1,1 +1,1 @@
-idUtilisateur; Name; Mail; Password
+user_id; password; token; active

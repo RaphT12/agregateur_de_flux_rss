@@ -13,7 +13,7 @@
             <h1>
                 Inscription:
             </h1>
-            <form action="index.html" method="post">
+            <form action="connexion.php" method="post">
                 <label for="name">Mot de passe:</label>
                 <input type="password" id="name" name="name"><br><br>
                 <label for="email">Email:</label>
