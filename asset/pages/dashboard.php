@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="asset/style/dashboard.css">
+    <link rel="stylesheet" href="../style/dashboard.css">
     <title>Vos centres d'interets</title>
 </head>
 <body>
