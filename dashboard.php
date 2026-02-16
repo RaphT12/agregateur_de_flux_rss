@@ -13,12 +13,12 @@
 <body>
     <header>
         <div id="header">
-            <h1>Bienvenu Raphaël</h1>
+            <h1>Bienvenue</h1>
             <div id="boutonHead">
-                <div class="TabBord">
+                <div class="TabBord boutonH">
                     <p>Tableau de bord</p>
                 </div>
-                <div id="deconnexion">
+                <div class="deconnexion boutonH">
                     <p>Déconnexion</p>
                 </div>
             </div>
@@ -29,9 +29,9 @@
             <article id="vosCentreInteret">
                 <div id="choixC">
                     <div id="Interets">
-                        <p>Vos centres d'interets</p>
+                        <p>Vos centres d'interets :</p>
                     </div>
-                    <div id="Changer">
+                    <div id="Changer" class="boutonH">
                         <p>Changer vos centres d'interets</p>
                     </div>
                 </div>
