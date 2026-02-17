@@ -64,7 +64,7 @@ function formatTempsEcoule($dateRss) {
             <article id="actualité">
                 <?php
 
-                $url = "https://www.lemonde.fr/culture/rss_full.xml";
+                $url = "https://www.lemonde.fr/pixels/rss_full.xml";
                 $rss = simplexml_load_file($url);
 
                 if ($rss) {
