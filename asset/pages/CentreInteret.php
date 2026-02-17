@@ -25,49 +25,60 @@
     <main>
         <div id="abonnements">
             <?php
+                $TopCSV = ["id_user", "name", "url"];
+                $donne = [];
                 $ChoixCentreInteret = [];
+                $index = 0;
+                $listChoix = [];
                 
                 $nomCSV = "../baseDonne/centreInterets.csv";
                 $handle = fopen($nomCSV, "w");
+                fputcsv($handle, $TopCSV, ',', '"', '');
 
                 if (isset($_POST['themes'])) {
                     foreach ($_POST['themes'] as $val){
-                        array_push($ChoixCentreInteret, $val);
-                        fwrite($monCSV, $val);
+                        array_push($ChoixCentreInteret, ["1", "$val", "https://www.lemonde.fr/".$val."/rss_full.xml"]);
                     };
                 };
 
-        
+                foreach($ChoixCentreInteret as $choix){
+                    array_push($listChoix, $ChoixCentreInteret[$index][1]);
+                    $index++;
+                }
 
                 if ($ChoixCentreInteret == []){
                     echo 'Veuillez séléctionné un theme.';
                 }else{
-                   echo 'Vous avez sélectionné ' . implode(" et " , $ChoixCentreInteret) .'.'; 
+                    echo 'Vous avez sélectionné ' . implode(" et " , $listChoix) .'.';
+                    foreach ($ChoixCentreInteret as $ch){
+                        fputcsv($handle, $ch, ',', '"', '');
+                    };
                 };
 
-                
+
+                fclose($handle);
             ?>
         </div>
         <form action="./CentreInteret.php" method="POST">
             <div id="formulaire">
                 <div class="checkboxs">
-                    <input type="checkbox" id="International" name="themes[]" value="International" />
+                    <input type="checkbox" id="International" name="themes[]" value="international" />
                     <label for="International">International</label>
                 </div>
                 <div class="checkboxs">
-                    <input type="checkbox" id="Planète" name="themes[]" value="Planète" />
+                    <input type="checkbox" id="Planète" name="themes[]" value="planete" />
                     <label for="Planète">Planète</label>
                 </div> 
                 <div class="checkboxs">
-                    <input type="checkbox" id="Politique" name="themes[]" value="Politique" />
+                    <input type="checkbox" id="Politique" name="themes[]" value="politique" />
                     <label for="Politique">Politique</label>
                 </div> 
                 <div class="checkboxs">
-                    <input type="checkbox" id="Société" name="themes[]" value="Société" />
+                    <input type="checkbox" id="Société" name="themes[]" value="societe" />
                     <label for="Société">Société</label>
                 </div> 
                 <div class="checkboxs">
-                    <input type="checkbox" id="Culture" name="themes[]" value="Culture" />
+                    <input type="checkbox" id="Culture" name="themes[]" value="culture" />
                     <label for="sCulture">Culture</label>
                 </div>  
             </div>

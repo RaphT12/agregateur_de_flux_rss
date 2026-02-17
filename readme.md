@@ -26,5 +26,3 @@ Vous allez travailler en groupe sur la réalisation d'un **agrégateur de flux R
 * [Qu'est-ce qu'un flux RSS ?](https://www.journaldunet.fr/web-tech/guide-de-l-entreprise-digitale/1125572-rss-qu-est-ce-que-c-est/)
 * [Liste des flux RSS du Monde.fr](https://www.lemonde.fr/actualite-medias/article/2019/08/12/les-flux-rss-du-monde-fr_5498778_3236.html)
 * [Tutoriel PHP Mail](https://www.hostinger.fr/tutoriels/php-mail)
-
-prout
