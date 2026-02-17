@@ -26,37 +26,29 @@
         <div id="abonnements">
             <?php
                 $TopCSV = ["id_user", "name", "url"];
-                $donne = [];
                 $ChoixCentreInteret = [];
-                $index = 0;
                 $listChoix = [];
-                
-                $nomCSV = "../baseDonne/centreInterets.csv";
-                $handle = fopen($nomCSV, "w");
-                fputcsv($handle, $TopCSV, ',', '"', '');
-
                 if (isset($_POST['themes'])) {
-                    foreach ($_POST['themes'] as $val){
-                        array_push($ChoixCentreInteret, ["1", "$val", "https://www.lemonde.fr/".$val."/rss_full.xml"]);
+                    $nomCSV = "../baseDonne/centreInterets.csv";
+                    $handle = fopen($nomCSV, "w");
+                    if ($handle){
+                        fputcsv($handle, $TopCSV, ',', '"', '');
+                        foreach ($_POST['themes'] as $val){
+                            $lignecsv = ["1", "$val", "https://www.lemonde.fr/".$val."/rss_full.xml"];
+                            fputcsv($handle, $lignecsv, ',', '"', '');
+                            $listChoix[] = $val;
+                        };
+                        fclose($handle);
+                        if (empty($listChoix)){
+                            echo "Veuillez selectionné un theme.";
+                        }else{
+                            echo "vous venez de selectionné " . implode(" et ", $listChoix) . '.';
+                        };
+                    }else{
+                        echo "impossible de creer le fichier";
                     };
                 };
-
-                foreach($ChoixCentreInteret as $choix){
-                    array_push($listChoix, $ChoixCentreInteret[$index][1]);
-                    $index++;
-                }
-
-                if ($ChoixCentreInteret == []){
-                    echo 'Veuillez séléctionné un theme.';
-                }else{
-                    echo 'Vous avez sélectionné ' . implode(" et " , $listChoix) .'.';
-                    foreach ($ChoixCentreInteret as $ch){
-                        fputcsv($handle, $ch, ',', '"', '');
-                    };
-                };
-
-
-                fclose($handle);
+                
             ?>
         </div>
         <form action="./CentreInteret.php" method="POST">
@@ -84,7 +76,7 @@
             </div>
             
             <div>
-                <button class="boutonsub" type="submit">S'abonner</button>
+                <button class="boutonsub" type="submit">s'abonner</button>
             </div>
         </form>
     </main>

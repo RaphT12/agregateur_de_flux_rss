@@ -23,6 +23,21 @@ function formatTempsEcoule($dateRss) {
     $jours = round($secondes / 86400);
     return "Il y a " . $jours . " jour" . ($jours > 1 ? "s" : "");
 }
+
+$nomCSV = "../baseDonne/centreInterets.csv";
+$csvlist = array_map('str_getcsv', file("$nomCSV"));
+$deps_Interet = array_slice($csvlist, 1);
+$lesUrl = [];
+$lesnom = [];
+$index = 0;
+foreach($deps_Interet as $info){
+    array_push($lesUrl, $info[2]);
+};
+
+foreach($deps_Interet as $infos){
+    array_push($lesnom, $infos[1]);
+};
+
 ?>
 
 
@@ -54,7 +69,7 @@ function formatTempsEcoule($dateRss) {
             <article id="vosCentreInteret">
                 <div id="choixC">
                     <div id="Interets">
-                        <p>Vos centres d'interets :</p>
+                        <p>Vos centres d'interets : <?php echo "<span class='text'>" . implode(" ", $lesnom) . "</span>"; ?></p>
                     </div>
                     <div id="Changer" class="boutonH">
                         <p><a href="CentreInteret.php">Changer vos centres d'interets</a></p>
@@ -63,14 +78,6 @@ function formatTempsEcoule($dateRss) {
             </article>
             <article id="actualité">
                 <?php
-                $nomCSV = "../baseDonne/centreInterets.csv";
-                $csvlist = array_map('str_getcsv', file("$nomCSV"));
-                $deps_Interet = array_slice($csvlist, 1);
-                $lesUrl = [];
-                $index = 0;
-                foreach($deps_Interet as $info){
-                    array_push($lesUrl, $info[2]);
-                };
 
                 foreach ($lesUrl as $urls){
                 
