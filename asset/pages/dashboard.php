@@ -63,35 +63,46 @@ function formatTempsEcoule($dateRss) {
             </article>
             <article id="actualité">
                 <?php
+                $nomCSV = "../baseDonne/centreInterets.csv";
+                $csvlist = array_map('str_getcsv', file("$nomCSV"));
+                $deps_Interet = array_slice($csvlist, 1);
+                $lesUrl = [];
+                $index = 0;
+                foreach($deps_Interet as $info){
+                    array_push($lesUrl, $info[2]);
+                };
 
-                $url = "https://www.lemonde.fr/pixels/rss_full.xml";
-                $rss = simplexml_load_file($url);
+                foreach ($lesUrl as $urls){
+                
+                    $url = "$urls";
+                    $rss = simplexml_load_file($url);
 
-                if ($rss) {
-                    foreach ($rss->channel->item as $item) {
-                        $media = $item->children('http://search.yahoo.com/mrss/');
-                        $image_url = "";
-                        $temps = formatTempsEcoule((string)$item->pubDate);
-                        if (isset($media->content)) {
-                            $image_url = (string)$media->content->attributes()->url;
-                        }
-                        echo"
-                            <div class='cardactu'>
-                                <img class='imgactu' src='{$image_url}' alt=''>
-                                <div class='infos'>
-                                    <h2>{$item->title}</h2>
-                                    <p class='description'>{$item->description}</p>
-                                    <div class='plusinfos'>
-                                        <p class='heur'>{$temps}</p>
-                                        <p><a href='{$item->link}'>Plus d'infos ></a></p>
+                    if ($rss) {
+                        foreach ($rss->channel->item as $item) {
+                            $media = $item->children('http://search.yahoo.com/mrss/');
+                            $image_url = "";
+                            $temps = formatTempsEcoule((string)$item->pubDate);
+                            if (isset($media->content)) {
+                                $image_url = (string)$media->content->attributes()->url;
+                            }
+                            echo"
+                                <div class='cardactu'>
+                                    <img class='imgactu' src='{$image_url}' alt=''>
+                                    <div class='infos'>
+                                        <h2>{$item->title}</h2>
+                                        <p class='description'>{$item->description}</p>
+                                        <div class='plusinfos'>
+                                            <p class='heur'>{$temps}</p>
+                                            <p><a href='{$item->link}'>Plus d'infos ></a></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ";
+                            ";
+                        };
+                    } else {
+                        echo "Impossible de charger le flux XML.";
                     };
-                } else {
-                    echo "Impossible de charger le flux XML.";
-                }
+                };
                 ?>
             </article>
         </section>
