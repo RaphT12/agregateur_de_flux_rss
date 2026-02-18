@@ -130,4 +130,24 @@ h2{
 .text{
     color: white;
     background-color: black;
+    font-size: 17px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 20px;
+}
+
+#Interets{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#cardinteret{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 70%;
+}
+
+#Interets p{
+    width: 270px;
 }

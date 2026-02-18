@@ -71,8 +71,29 @@
                 </div> 
                 <div class="checkboxs">
                     <input type="checkbox" id="Culture" name="themes[]" value="culture" />
-                    <label for="sCulture">Culture</label>
-                </div>  
+                    <label for="Culture">Culture</label>
+                </div>
+                
+                <div class="checkboxs">
+                    <input type="checkbox" id="Economie" name="themes[]" value="economie" />
+                    <label for="Economie">Economie</label>
+                </div>
+                <div class="checkboxs">
+                    <input type="checkbox" id="Idées" name="themes[]" value="idees" />
+                    <label for="Idées">Idées</label>
+                </div>
+                <div class="checkboxs">
+                    <input type="checkbox" id="Sciences" name="themes[]" value="sciences" />
+                    <label for="Sciences">Sciences</label>
+                </div> 
+                <div class="checkboxs">
+                    <input type="checkbox" id="Sport" name="themes[]" value="sport" />
+                    <label for="Sport">Sport</label>
+                </div>
+                <div class="checkboxs">
+                    <input type="checkbox" id="Pixels" name="themes[]" value="pixels" />
+                    <label for="Pixels">Pixels</label>
+                </div>        
             </div>
             
             <div>

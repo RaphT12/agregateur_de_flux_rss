@@ -32,11 +32,9 @@ $lesnom = [];
 $index = 0;
 foreach($deps_Interet as $info){
     array_push($lesUrl, $info[2]);
+    array_push($lesnom, $info[1]);
 };
 
-foreach($deps_Interet as $infos){
-    array_push($lesnom, $infos[1]);
-};
 
 ?>
 
@@ -69,7 +67,10 @@ foreach($deps_Interet as $infos){
             <article id="vosCentreInteret">
                 <div id="choixC">
                     <div id="Interets">
-                        <p>Vos centres d'interets : <?php echo "<span class='text'>" . implode(" ", $lesnom) . "</span>"; ?></p>
+                        <p>Vos centres d'interets :</p>
+                        <div id="cardinteret">
+                            <?php foreach($lesnom as $nomcentre){echo "<span class='text'>" . $nomcentre . "</span>";}; ?>
+                        </div> 
                     </div>
                     <div id="Changer" class="boutonH">
                         <p><a href="CentreInteret.php">Changer vos centres d'interets</a></p>
@@ -100,12 +101,14 @@ foreach($deps_Interet as $infos){
                                         <p class='description'>{$item->description}</p>
                                         <div class='plusinfos'>
                                             <p class='heur'>{$temps}</p>
+                                            <p class='heur'>{$deps_Interet[$index][1]}</p>
                                             <p><a href='{$item->link}'>Plus d'infos ></a></p>
                                         </div>
                                     </div>
                                 </div>
                             ";
                         };
+                        $index++;
                     } else {
                         echo "Impossible de charger le flux XML.";
                     };
