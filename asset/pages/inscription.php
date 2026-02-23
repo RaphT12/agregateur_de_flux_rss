@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="asset/style/connexion.css">
+    <link rel="stylesheet" href="../style/inscription.css">
 </head>
 <body>
     <div id = "container">
-        <img src="asset/image/cabinet_notaire_allobroges_salle_dattente (1).webp" alt="image de la salle dattente du cabinet notaire">
+        <img src="../image/cabinet_notaire_allobroges_salle_dattente (1).webp" alt="image de la salle dattente du cabinet notaire">
         <div id = "inscription">
             <h1>
                 Inscription
