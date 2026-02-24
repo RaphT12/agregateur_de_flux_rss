@@ -19,7 +19,7 @@ body{
   width: 100%;
   height: 100%;
   z-index: 2;
-  opacity: 0.2;        
+  opacity: 0.1;        
 }
 
 #fondform{
@@ -34,7 +34,7 @@ body{
     align-items: center;
     padding: 30px;
     border-radius: 20px;
-    opacity: 0.85;
+    opacity: 0.75;
 }
 
 form{
@@ -93,5 +93,11 @@ a{
 }
 
 #pmdp{
+    margin-top: 10px;
+}
+
+.messageok{
+    color: green;
+    text-align: center;
     margin-top: 10px;
 }

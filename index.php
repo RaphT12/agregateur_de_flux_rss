@@ -25,7 +25,7 @@
                 <input type="password" id="password" name="password" class = "inscription">
                 <input type="submit" value="Se connecter" class="bouton formbouton">
             </form>
-            <a href="asset/pages/inscription.php"><div class="binscription bouton"><p>S'inscrire</p></div></a>
+            <a href="asset/pages/inscription2.php"><div class="binscription bouton"><p>S'inscrire</p></div></a>
             <p id="pmdp"><a id="mdp" href="">Mot de passe oublié</a></p>
         </div> 
     
