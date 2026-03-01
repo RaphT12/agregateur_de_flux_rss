@@ -1,69 +1,78 @@
 <?php
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php'; // Charge l'autoloader de Composer (nécessaire pour PHPMailer)
 
+// Importe les classes PHPMailer dans le script
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$messageok = "";
-$erreur = "";
+$messageok = "";                    // Contiendra le message de succès
+$erreur = "";                       // Contiendra le message d'erreur
 
-// Charge le .env
-$lines = file(__DIR__ . '/../../.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-foreach ($lines as $line) {
-    if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
-        [$key, $value] = explode('=', $line, 2);
-        $_ENV[trim($key)] = trim($value);
+// Chargement du fichier .env
+$lines = file(__DIR__ . '/../../.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES); 
+
+// Lit le fichier .env ligne par ligne en ignorant les lignes vides
+foreach ($lines as $line) {         
+    if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {             // Traite uniquement les lignes contenant '=' et ne commençant pas par '#' (commentaires)
+        [$key, $value] = explode('=', $line, 2);                                // Sépare la clé et la valeur au premier '='
+        $_ENV[trim($key)] = trim($value);                                       // Stocke la variable dans $_ENV en supprimant les espaces
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = htmlspecialchars($_POST['mail']);
-
-    // Vérifie que l'email existe dans le CSV
-    $csvPath = __DIR__ . '/../baseDonne/Utilisateur.csv';
-    $existe = false;
-
-    if (($handle = fopen($csvPath, 'r')) !== false) {
-        fgetcsv($handle); // saute l'en-tête
-        while (($row = fgetcsv($handle)) !== false) {
-            if (isset($row[1]) && $row[1] === $email) {
-                $existe = true;
-                break;
+// Traitement du formulaire 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {                     // Vérifie que le formulaire a été soumis en POST
+    $email = htmlspecialchars($_POST['mail']);                  // Récupère l'email et le sécurise contre les failles XSS
+    $csvPath = __DIR__ . '/../baseDonne/Utilisateur.csv';       // Vérification de l'email dans le CSV 
+    $existe = false;                                            // Par défaut, l'email n'existe pas
+    if (($handle = fopen($csvPath, 'r')) !== false) {           // Ouvre le CSV en lecture
+        fgetcsv($handle);                                       // Saute la ligne d'en-têtes
+        while (($row = fgetcsv($handle)) !== false) {           // Lit ligne par ligne
+            if (isset($row[1]) && $row[1] === $email) {         // Compare l'email (colonne 1) avec celui saisi
+                $existe = true;                                 // Email trouvé
+                break;                                          // Inutile de continuer la lecture
             }
         }
-        fclose($handle);
+        fclose($handle);                                        // Ferme le fichier
     }
 
     if (!$existe) {
+        // Email introuvable dans le CSV -> affiche une erreur
         $erreur = "<p style='color:red; text-align:center;'>Aucun compte trouvé avec cet email.</p>";
     } else {
-        $mail = new PHPMailer(true);
+        // Email trouvé -> on prépare l'envoi du mail avec PHPMailer
+        $mail = new PHPMailer(true); // true active les exceptions en cas d'erreur
 
         try {
-            $mail->isSMTP();
-            $mail->Host     = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Port     = 587;
-            $mail->Username = $_ENV['GMAIL_USER'];
-            $mail->Password = $_ENV['GMAIL_PASSWORD'];
-            $mail->CharSet  = 'UTF-8';
+            // Configuration SMTP 
+            $mail->isSMTP();                                    // Utilise le protocole SMTP
+            $mail->Host     = 'smtp.gmail.com';                 // Serveur SMTP de Gmail
+            $mail->SMTPAuth = true;                             // Active l'authentification SMTP
+            $mail->Port     = 587;                              // Port SMTP avec chiffrement TLS
+            $mail->Username = $_ENV['GMAIL_USER'];              // Email expéditeur (depuis .env)
+            $mail->Password = $_ENV['GMAIL_PASSWORD'];          // Mot de passe (depuis .env)
+            $mail->CharSet  = 'UTF-8';                          // Encodage pour les accents
 
-            $mail->setFrom($_ENV['GMAIL_USER'], 'Le Monde');
-            $mail->addAddress($email);
+            // Expéditeur et destinataire 
+            $mail->setFrom($_ENV['GMAIL_USER'], 'Le Monde');    // Adresse et nom de l'expéditeur
+            $mail->addAddress($email);                          // Destinataire = email saisi
 
-            $mail->isHTML(true);
+            // Contenu du mail 
+            $mail->isHTML(true);                                // Le contenu sera en HTML
             $mail->Subject = 'Réinitialisation de votre mot de passe';
 
+            // Génère le lien de réinitialisation avec l'email encodé en paramètre GET
             $url = "http://localhost:8888/PHP/PHP-projet/asset/pages/mdp.php?email=" . urlencode($email);
 
+            // Corps du mail avec un bouton lien vers la page de réinitialisation
             $mail->Body = "<h1>Réinitialisation du mot de passe</h1>
                            <p>Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe :</p>
                            <p><a href='$url' style='background:black; color:white; padding:10px; text-decoration:none;'>Réinitialiser mon mot de passe</a></p>";
 
-            $mail->send();
+            $mail->send(); // Envoie le mail
             $messageok = "<p style='color:green; text-align:center;'>Un email de réinitialisation a été envoyé.</p>";
 
         } catch (Exception $e) {
+            // En cas d'erreur SMTP, affiche le détail de l'erreur PHPMailer
             $erreur = "<p style='color:red; text-align:center;'>Erreur d'envoi : {$mail->ErrorInfo}</p>";
         }
     }

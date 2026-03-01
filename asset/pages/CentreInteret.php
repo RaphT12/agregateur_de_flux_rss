@@ -1,12 +1,14 @@
 <?php
+
+// Démarre la session PHP pour accéder aux variables de session
 session_start();
 
-if (!isset($_SESSION['email'])) {
-    header('Location: ../../index.php');
-    exit();
+if (!isset($_SESSION['email'])) {           // Si l'utilisateur n'est pas connecté (pas d'email en session), 
+    header('Location: ../../index.php');    // on le redirige vers la page d'accueil
+    exit();                                 // Arrête l'exécution du script après la redirection
 }
 
-$emailConnecte = $_SESSION['email'];
+$emailConnecte = $_SESSION['email'];        // Récupère l'email de l'utilisateur connecté depuis la session
 ?>
 
 <!DOCTYPE html>
@@ -36,49 +38,43 @@ $emailConnecte = $_SESSION['email'];
     <main>
         <div id="abonnements">
             <?php
-                $TopCSV = ["id_user", "name", "url"];
-                $listChoix = [];
+                $TopCSV = ["id_user", "name", "url"];                       // Définit les en-têtes du fichier CSV
+                $listChoix = [];                                            // Initialise un tableau vide pour stocker les thèmes choisis
 
-                if (isset($_POST['themes'])) {
-                    $nomCSV = "../baseDonne/centreInterets.csv";
-                    $rows = [];
-
-                    // Lit les lignes existantes et garde les autres utilisateurs
-                    if (file_exists($nomCSV)) {
-                        $handle = fopen($nomCSV, 'r');
-                        fgetcsv($handle); // saute l'en-tête
-                        while (($row = fgetcsv($handle)) !== false) {
-                            if ($row[0] !== $emailConnecte) {
-                                $rows[] = $row;
+                if (isset($_POST['themes'])) {                              // Vérifie si le formulaire a été soumis avec des thèmes cochés
+                    $nomCSV = "../baseDonne/centreInterets.csv";            // Chemin vers le fichier CSV
+                    $rows = [];                                             // Tableau pour stocker les lignes des autres utilisateurs
+                    if (file_exists($nomCSV)) {                              // Vérifie si le fichier CSV existe déjà
+                        $handle = fopen($nomCSV, 'r');                      // Ouvre le fichier en lecture
+                        fgetcsv($handle);                                   // Saute la première ligne (les en-têtes)
+                        while (($row = fgetcsv($handle)) !== false) {       // Lit le fichier ligne par ligne
+                            if ($row[0] !== $emailConnecte) {               // Si la ligne n'appartient pas à l'utilisateur connecté
+                                $rows[] = $row;                             // On la conserve dans le tableau
                             }
                         }
-                        fclose($handle);
+                        fclose($handle);                                    // Ferme le fichier après lecture
                     }
+                    $handle = fopen($nomCSV, 'w');                          // Réouvre le fichier en écriture (efface le contenu existant)
+                    if ($handle) {                                          // Vérifie que l'ouverture a réussi
+                        fputcsv($handle, $TopCSV, ',', '"', '');            // Réécrit la ligne d'en-têtes
 
-                    // Réécrit tout
-                    $handle = fopen($nomCSV, 'w');
-                    if ($handle) {
-                        fputcsv($handle, $TopCSV, ',', '"', '');
-
-                        // Remet les autres utilisateurs
-                        foreach ($rows as $row) {
+                        foreach ($rows as $row) {                           // Réécrit les lignes des autres utilisateurs
                             fputcsv($handle, $row, ',', '"', '');
                         }
 
-                        // Ajoute les choix de l'utilisateur connecté
-                        foreach ($_POST['themes'] as $val) {
-                            fputcsv($handle, [$emailConnecte, $val, "https://www.lemonde.fr/".$val."/rss_full.xml"], ',', '"', '');
-                            $listChoix[] = $val;
+                        foreach ($_POST['themes'] as $val) {                                                                            // Pour chaque thème coché par l'utilisateur
+                            fputcsv($handle, [$emailConnecte, $val, "https://www.lemonde.fr/".$val."/rss_full.xml"], ',', '"', '');     // Ajoute une ligne avec l'email, le nom du thème et l'URL du flux RSS correspondant
+                            $listChoix[] = $val;                                                                                        // Ajoute le thème à la liste des choix
                         }
-                        fclose($handle);
+                        fclose($handle);                                                                                                // Ferme le fichier après écriture
 
-                        if (empty($listChoix)) {
+                        if (empty($listChoix)) {                                                        // Si aucun thème n'a été sélectionné
                             echo "Veuillez sélectionner un thème.";
-                        } else {
+                        } else {                                                                        // Sinon, affiche les thèmes sélectionnés
                             echo "Vous venez de sélectionner : " . implode(", ", $listChoix) . ".";
                         }
                     } else {
-                        echo "Impossible de créer le fichier.";
+                        echo "Impossible de créer le fichier.";                                         // Erreur si le fichier ne peut pas être ouvert
                     }
                 }
             ?>
