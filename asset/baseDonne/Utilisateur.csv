@@ -1,6 +1,2 @@
-user_id; password; token; active
-1; ccbdkbc;;1RaphaelLePlusBeau,raphael.turchi12@gmail.com,7de946cc6e6646b4606c258f7fa24e24
-a,raphael.turchi12@gmail.com,c38c666f0e8a3fb629ffd4c2fdee2b68
-raphael,raphael.turchi12@gmail.com,99b59170c9bdba1c4b9665a1b8367052
-raphael,raphael.turchi12@gmail.com,0ac216d42fd53478e5a4e5a9f41b4cca
-raphael,raphael.turchi12@gmail.com,0d98a4cd46a8032d355e69a5e375a302
+nom;adresse;token;mdp
+

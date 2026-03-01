@@ -10,9 +10,7 @@
     <div id = "container">
         <img src="../image/cabinet_notaire_allobroges_salle_dattente (1).webp" alt="image de la salle dattente du cabinet notaire">
         <div id = "inscription">
-            <h1>
-                Inscription
-            </h1>
+            <h1>Inscription</h1>
             <form action="connexion.php" method="post">
                 <label for="name" class = "inscription">Nom d'utilisateur:</label>
                 <input type="text" id="name" name="name" class = "inscription">

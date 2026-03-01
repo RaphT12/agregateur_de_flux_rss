@@ -1,4 +1,13 @@
+<?php
+session_start();
 
+if (!isset($_SESSION['email'])) {
+    header('Location: ../../index.php');
+    exit();
+}
+
+$emailConnecte = $_SESSION['email'];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +25,11 @@
                 <div class="TabBord boutonH">
                     <p><a href="dashboard.php">Tableau de bord</a></p>
                 </div>
-                <div class="deconnexion boutonH">
-                    <p>Déconnexion</p>
-                </div>
+                <a href="deconnexion.php">
+                    <div class="deconnexion boutonH">
+                        <p>Déconnexion</p>
+                    </div>
+                </a>
             </div>
         </div>
     </header>
@@ -26,29 +37,50 @@
         <div id="abonnements">
             <?php
                 $TopCSV = ["id_user", "name", "url"];
-                $ChoixCentreInteret = [];
                 $listChoix = [];
+
                 if (isset($_POST['themes'])) {
                     $nomCSV = "../baseDonne/centreInterets.csv";
-                    $handle = fopen($nomCSV, "w");
-                    if ($handle){
-                        fputcsv($handle, $TopCSV, ',', '"', '');
-                        foreach ($_POST['themes'] as $val){
-                            $lignecsv = ["1", "$val", "https://www.lemonde.fr/".$val."/rss_full.xml"];
-                            fputcsv($handle, $lignecsv, ',', '"', '');
-                            $listChoix[] = $val;
-                        };
+                    $rows = [];
+
+                    // Lit les lignes existantes et garde les autres utilisateurs
+                    if (file_exists($nomCSV)) {
+                        $handle = fopen($nomCSV, 'r');
+                        fgetcsv($handle); // saute l'en-tête
+                        while (($row = fgetcsv($handle)) !== false) {
+                            if ($row[0] !== $emailConnecte) {
+                                $rows[] = $row;
+                            }
+                        }
                         fclose($handle);
-                        if (empty($listChoix)){
-                            echo "Veuillez selectionné un theme.";
-                        }else{
-                            echo "vous venez de selectionné " . implode(" et ", $listChoix) . '.';
-                        };
-                    }else{
-                        echo "impossible de creer le fichier";
-                    };
-                };
-                
+                    }
+
+                    // Réécrit tout
+                    $handle = fopen($nomCSV, 'w');
+                    if ($handle) {
+                        fputcsv($handle, $TopCSV, ',', '"', '');
+
+                        // Remet les autres utilisateurs
+                        foreach ($rows as $row) {
+                            fputcsv($handle, $row, ',', '"', '');
+                        }
+
+                        // Ajoute les choix de l'utilisateur connecté
+                        foreach ($_POST['themes'] as $val) {
+                            fputcsv($handle, [$emailConnecte, $val, "https://www.lemonde.fr/".$val."/rss_full.xml"], ',', '"', '');
+                            $listChoix[] = $val;
+                        }
+                        fclose($handle);
+
+                        if (empty($listChoix)) {
+                            echo "Veuillez sélectionner un thème.";
+                        } else {
+                            echo "Vous venez de sélectionner : " . implode(", ", $listChoix) . ".";
+                        }
+                    } else {
+                        echo "Impossible de créer le fichier.";
+                    }
+                }
             ?>
         </div>
         <form action="./CentreInteret.php" method="POST">
@@ -73,7 +105,6 @@
                     <input type="checkbox" id="Culture" name="themes[]" value="culture" />
                     <label for="Culture">Culture</label>
                 </div>
-                
                 <div class="checkboxs">
                     <input type="checkbox" id="Economie" name="themes[]" value="economie" />
                     <label for="Economie">Economie</label>
@@ -95,10 +126,10 @@
                     <label for="Pixels">Pixels</label>
                 </div>        
             </div>
-            
             <div>
-                <button class="boutonsub" type="submit">s'abonner</button>
+                <button class="boutonsub" type="submit">S'abonner</button>
             </div>
         </form>
     </main>
 </body>
+</html>
