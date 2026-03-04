@@ -53,9 +53,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {                // Vérifie que le fo
             
             $url = "http://localhost:8888/PHP/PHP-projet/asset/pages/mdp.php";      // URL vers la page de création de mot de passe
             
-            $mail->Body = "<h1>Bienvenue $nom !</h1> // Corps du mail en HTML avec le nom de l'utilisateur
-                           <p>Cliquez sur le bouton ci-dessous pour créer votre mot de passe :</p> // Texte d'instruction
-                           <p><a href='$url' style='background:black; color:white; padding:10px; text-decoration:none;'>Créer mon mot de passe</a></p>"; // Bouton lien vers la page mdp.php
+            $mail->Body = "
+                    <div style='font-family: Arial, sans-serif; text-align: center; max-width: 500px; margin: auto; border: 1px solid #eee; padding: 20px;'>
+                        <div style='background-color: black; color: white; padding: 20px;'>
+                            <h1 style='margin: 0;'>Le Monde</h1>
+                        </div>
+                        
+                        <h2 style='margin-top: 20px;'>Vous y êtes presque, $nom !</h2>
+                        
+                        <p style='color: #444;'>Pour finaliser votre inscription, il ne vous reste plus qu'une étape : créer votre mot de passe.</p>
+                        
+                        <p style='color: #444; font-size: 14px;'>Pour ce faire, veuillez cliquer sur le bouton ci-dessous. Vous pourrez le changer à tout moment ou le récupérer en cas de perte.</p>
+                        
+                        <div style='margin-top: 30px;'>
+                            <a href='$url' style='background-color: black; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; display: inline-block;'>
+                                Créer un mot de passe
+                            </a>
+                        </div>
+                    </div>";
 
             $mail->send();          // Envoie le mail
 

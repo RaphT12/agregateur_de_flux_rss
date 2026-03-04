@@ -64,9 +64,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {                     // Vérifie que 
             $url = "http://localhost:8888/PHP/PHP-projet/asset/pages/mdp.php?email=" . urlencode($email);
 
             // Corps du mail avec un bouton lien vers la page de réinitialisation
-            $mail->Body = "<h1>Réinitialisation du mot de passe</h1>
-                           <p>Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe :</p>
-                           <p><a href='$url' style='background:black; color:white; padding:10px; text-decoration:none;'>Réinitialiser mon mot de passe</a></p>";
+            $mail->Body = "
+                    <div style='font-family: Arial, sans-serif; text-align: center; max-width: 500px; margin: auto; border: 1px solid #eee; padding: 20px;'>
+                        <div style='background-color: black; color: white; padding: 20px;'>
+                            <h1 style='margin: 0;'>Le Monde</h1>
+                        </div>
+                        
+                        <h2 style='margin-top: 20px;'>Vous y êtes presque !</h2>
+                        
+                        <p style='color: #444;'>Pour changer votre mot de passe, il ne vous reste plus qu'une étape : créer votre mot de passe.</p>
+                        
+                        <p style='color: #444; font-size: 14px;'>Pour ce faire, veuillez cliquer sur le bouton ci-dessous. Vous pourrez le rechanger à tout moment ou le récupérer en cas de perte.</p>
+                        
+                        <div style='margin-top: 30px;'>
+                            <a href='$url' style='background-color: black; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; display: inline-block;'>
+                                Créer un mot de passe
+                            </a>
+                        </div>
+                    </div>";
 
             $mail->send(); // Envoie le mail
             $messageok = "<p style='color:green; text-align:center;'>Un email de réinitialisation a été envoyé.</p>";
