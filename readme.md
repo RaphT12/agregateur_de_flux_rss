@@ -1,6 +1,6 @@
 # Le Monde — Agrégateur de flux RSS
 
-L'objectif de se projet scolaire etait d'utilisé les flux RSS du journal **Le Monde** mais la grande difficulté etait surtout de les sauvegarder dans des fichier csv en imitant une base de donnée pour que l'utilisateur puisse garder ses preferences.
+L'objectif de ce projet scolaire était d'utiliser les flux RSS du journal Le Monde, mais la grande difficulté était surtout de les sauvegarder dans des fichiers CSV en imitant une base de données pour que l'utilisateur puisse garder ses préférences.
 
 ---
 
