@@ -1,6 +1,6 @@
 # Le Monde — Agrégateur de flux RSS
 
-L'objectif de se projet solaire etait d'utilisé les flux RSS du journal **Le Monde** mais la grande difficulté etait surtout de les sauvegarder dans des fichier csv en imitant les base de donnée pour que l'utilisateur puisse garder ses preferences.
+L'objectif de se projet scolaire etait d'utilisé les flux RSS du journal **Le Monde** mais la grande difficulté etait surtout de les sauvegarder dans des fichier csv en imitant une base de donnée pour que l'utilisateur puisse garder ses preferences.
 
 ---
 
@@ -34,7 +34,7 @@ PHP-projet/
 
 ## Prérequis
 
-- **PHP** >= 7.4
+- **PHP** >= 8.4
 - **Composer** (pour PHPMailer)
 - **Serveur local** (MAMP, XAMPP, Laragon...)
 - Un compte **Gmail** avec un mot de passe d'application
@@ -60,8 +60,6 @@ GMAIL_USER=votre.email@gmail.com
 GMAIL_PASSWORD=votre_mot_de_passe_application
 ```
 
-> ⚠️ Ne jamais commiter le `.env` — ajoutez-le à votre `.gitignore`
-
 **4. Créer les fichiers CSV** dans `asset/baseDonne/`
 
 `Utilisateur.csv` :
@@ -86,7 +84,6 @@ http://localhost:8888/PHP/PHP-projet/index.php
 ### 1. Inscription (`inscription2.php`)
 - L'utilisateur saisit son **nom** et son **email**
 - Le script vérifie que l'email n'est pas déjà utilisé dans le CSV
-- Un **token unique** est généré avec `bin2hex(random_bytes(16))`
 - Un **email de confirmation** est envoyé via PHPMailer (SMTP Gmail)
 - L'utilisateur est enregistré dans `Utilisateur.csv` avec `[nom, email, token]`
 
@@ -168,7 +165,7 @@ http://localhost:8888/PHP/PHP-projet/index.php
 - Les identifiants SMTP sont stockés dans un fichier **`.env`** non versionné
 - Toutes les pages protégées vérifient la session au chargement
 
-> ⚠️ **Limitations connues** — Ce projet est un prototype scolaire. En production, il faudrait :
+> - **Limitations connues** — Ce projet est un prototype scolaire. En production, il faudrait :
 > - Remplacer les CSV par une **base de données** (MySQL/PostgreSQL)
 > - Ajouter un **token dans le lien** de réinitialisation (actuellement l'email passe en clair dans l'URL)
 > - Utiliser **HTTPS**
@@ -186,4 +183,4 @@ http://localhost:8888/PHP/PHP-projet/index.php
 
 ## 👤 Auteur
 
-Projet réalisé par Raphaël TURCHI et Luffas dans le cadre d'un cours de développement web en PHP.
+Projet réalisé par Raphaël TURCHI et Lucas Delbeck dans le cadre d'un cours de développement web en PHP.
