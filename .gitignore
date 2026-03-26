@@ -2,3 +2,5 @@
 /vendor/
 .DS_Store
 Thumbs.db
+composer.json
+composer.lock
